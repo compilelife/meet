@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Meet
+GenericName=meet wallpaper
+Comment=meet randomly generated wallpapers
+Comment[zh_CN]=遇见随机壁纸
+
+Icon=_pwd_/icon.ico
+
+Type=Application
+
+Exec=_pwd_/meet
+StartupNotify=false
+Terminal=false
