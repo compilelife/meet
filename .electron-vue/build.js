@@ -118,6 +118,7 @@ function bundleApp () {
           copy('build/linux/meet.desktop', appPath+'/meet.desktop')
         }
 
+        console.log('zip '+appPath)
         await compress.zip.compressDir(appPath, `${appPath}.zip`)
       }
       
