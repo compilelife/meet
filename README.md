@@ -1,40 +1,42 @@
-**Meet** create randomly generated wallpaper. Meet your wallpaper in random world.
+**Meet**可以生成随机的壁纸. 让你在随机的世界里遇见喜欢的壁纸.
 
-[中文](README_zh.md)
+[英文](REAMDE_en.md)
 
-# Downlaod
+[gitee国内加速](https://gitee.com/compilelife/meet)
 
-Supported:
+# 下载
+
+支持平台：
 
 - macos
 - linux
 - windows
 
-coming soon
+👉 https://mianbaoduo.com/o/bread/aZaUlZs=
 
-# Development
+# 开发
 
 ```shell
 yarn
 yarn run dev
 ```
 
-# Bundle
+# 打包
 
 ```shell
 yarn
 yarn run build
 ```
 
-# Expect more
+# 更多值得期待
 
-- [ ] more beautiful and interesting patterns
-- [ ] change periodically
-- [ ] history wallpaper
-- [ ] time/weather aware
-- [ ] snippets: weather/calendar/a word of the day...
- 
-# Examples
+- [ ] 更多好看而有趣的壁纸模式
+- [ ] 定时更换
+- [ ] 历史记录
+- [ ] 响应时间、天气变化的壁纸
+- [ ] 小玩意: 天气、日历、每日一言...
+
+# 示例
 
 ![city](examples/city.png)
 
@@ -42,4 +44,4 @@ yarn run build
 
 ![strike](examples/strike.png)
 
-[more](examples)
+[更多](examples)
