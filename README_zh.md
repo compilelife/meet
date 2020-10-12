@@ -2,6 +2,8 @@
 
 [英文](REAMDE.md)
 
+[gitee国内加速](https://gitee.com/compilelife/meet)
+
 # 下载
 
 支持平台：
