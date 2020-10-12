@@ -1,6 +1,7 @@
 import { Context, Type } from "./Defs";
 import {G} from '@svgdotjs/svg.js'
 import '@svgdotjs/svg.filter.js'
+import { Aux } from "./Aux";
 
 export default {
     name: 'Strike',
@@ -29,7 +30,7 @@ export default {
         ]
         let i = 0
         while (x < n) {
-            let w = Math.floor(Math.random() * drift + minWidth)
+            let w = Math.floor(Aux.linearRand(minWidth+drift, minWidth))
             if (w > n - x) {
                 w = n - x
             }
@@ -48,7 +49,6 @@ export default {
         wrap.x((ctx.width - n) / 2)
         wrap.y((ctx.height - n) / 2)
 
-        const angle = angles[Math.floor(Math.random()*angles.length)]
-        wrap.rotate(angle)
+        wrap.rotate(Aux.arrRand(angles))
     }
 }

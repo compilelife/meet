@@ -22,6 +22,7 @@ import { Context } from "../generator/Defs"
 const { ipcRenderer, remote } = require("electron")
 const fs = require("fs")
 import Matercolor from "matercolors"
+import { Aux } from '../generator/Aux'
 const wallpaper = require('wallpaper')
 
 let lastSavePath = ''
@@ -40,8 +41,9 @@ export default {
       const screenSize = remote.screen.getPrimaryDisplay().size
       ctx.width = this.width = screenSize.width
       ctx.height = this.height = screenSize.height
-      const randomColor = '#' + Math.random().toString(16).substr(2, 6).toUpperCase();
-      ctx.colors = new Matercolor(randomColor)
+      const color = Aux.randomColorStr()
+      console.log(color)
+      ctx.colors = new Matercolor(color)
 
       const svg = SVG(this.$refs.canvas)
       svg.clear()

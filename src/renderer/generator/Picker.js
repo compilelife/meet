@@ -1,3 +1,4 @@
+import { Aux } from './Aux'
 import { Type } from './Defs'
 
 let allGenerators = [
@@ -40,8 +41,7 @@ function pick(type) {
         arr = generatorsByType[type]
     }
 
-    const i = Math.floor(Math.random()*arr.length)
-    const gen = arr[i]
+    const gen = Aux.arrRand(arr)
     let ret = [gen]
 
     if ((gen.types & Type.FILTER) === Type.FILTER) {

@@ -1,4 +1,5 @@
 import {G} from '@svgdotjs/svg.js'
+import { Aux } from './Aux'
 require('@svgdotjs/svg.filter.js') //install filter
 
 import {Context, Type} from './Defs'
@@ -40,10 +41,10 @@ class DrawCity {
         const flavors = [this.buildingA, this.buildingB, this.buildingC]
 
         while (x < this.ctx.width) {
-            const h = Math.random() * (down - up)
-            const w = Math.round(Math.random() * (wide - narrow) + narrow)
-            const i = Math.floor(Math.random()*flavors.length)
-            flavors[i].bind(this)(x,w,h)
+            const h = Aux.linearRand(down - up)
+            const w = Math.round(Aux.linearRand(wide, narrow))
+            const flavor = Aux.arrRand(flavors)
+            flavor.bind(this)(x,w,h)
             x+=w
         }
     }

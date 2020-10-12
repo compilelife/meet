@@ -1,6 +1,7 @@
 import { Context, Type } from "./Defs";
 import {G} from '@svgdotjs/svg.js'
 import '@svgdotjs/svg.filter.js'
+import { Aux } from "./Aux";
 
 export default {
     name: 'Mist',
@@ -11,7 +12,7 @@ export default {
      */
     generate: (g, ctx)=>{
         g.filterWith(add=>{
-            add.gaussianBlur(40)
+            add.gaussianBlur(Aux.linearRand(40,20))
         })
     }
 }
