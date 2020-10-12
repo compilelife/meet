@@ -6,6 +6,7 @@ const { say } = require('cfonts')
 const chalk = require('chalk')
 const del = require('del')
 const fs = require('fs')
+const compress = require('compressing')
 const packager = require('electron-packager')
 const webpack = require('webpack')
 const Multispinner = require('multispinner')
@@ -106,15 +107,20 @@ function copy(from,to) {
 
 function bundleApp () {
   buildConfig.mode = 'production'
-  packager(buildConfig, (err, appPaths) => {
+  packager(buildConfig, async (err, appPaths) => {
     if (err) {
       console.log(`\n${errorLog}${chalk.yellow('`electron-packager`')} says...\n`)
       console.log(err + '\n')
     } else {
-      if (process.env.BUILD_TARGET === 'linux') {
-        copy('build/linux/create_desktop.sh', appPaths+'/create_desktop.sh')
-        copy('build/linux/meet.desktop', appPaths+'/meet.desktop')
+      for (const appPath of appPaths) {
+        if (appPath.indexOf('meet-linux') !== -1) {
+          copy('build/linux/create_desktop.sh', appPath+'/create_desktop.sh')
+          copy('build/linux/meet.desktop', appPath+'/meet.desktop')
+        }
+
+        await compress.zip.compressDir(appPath, `${appPath}.zip`)
       }
+      
       console.log(`\n${doneLog}\n`)
     }
   })

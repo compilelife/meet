@@ -24,6 +24,7 @@
     "@svgdotjs/svg.filter.js": "^3.0.7",
     "@svgdotjs/svg.js": "^3.0.16",
     "axios": "^0.18.0",
+    "compressing": "^1.5.1",
     "element-ui": "^2.13.2",
     "matercolors": "git+https://github.com/compilelife/Matercolors.git",
     "vue": "^2.5.16",
