@@ -41,9 +41,9 @@ class DrawCity {
         const flavors = [this.buildingA, this.buildingB, this.buildingC]
 
         while (x < this.ctx.width) {
-            const h = Aux.linearRand(down - up)
-            const w = Math.round(Aux.linearRand(wide, narrow))
-            const flavor = Aux.arrRand(flavors)
+            const h = Aux.randLinearValue(down - up)
+            const w = Math.round(Aux.randLinearValue(wide, narrow))
+            const flavor = Aux.randArrItem(flavors)
             flavor.bind(this)(x,w,h)
             x+=w
         }

@@ -18,12 +18,13 @@
 
 <script>
 import { SVG } from "@svgdotjs/svg.js"
-import { Context } from "../generator/Defs"
+import { Context, Mask } from "../generator/Defs"
 const { ipcRenderer, remote } = require("electron")
 const fs = require("fs")
 import Matercolor from "matercolors"
 import { Aux } from '../generator/Aux'
 const wallpaper = require('wallpaper')
+import {svgAsPngUri} from 'save-svg-as-png'
 
 let lastSavePath = ''
 
@@ -36,55 +37,33 @@ export default {
     }
   },
   methods: {
-    generate: function () {
+    generate: async function () {
       const ctx = new Context()
       const screenSize = remote.screen.getPrimaryDisplay().size
       ctx.width = this.width = screenSize.width
       ctx.height = this.height = screenSize.height
-      const color = Aux.randomColorStr()
-      console.log(color)
+      const color = Aux.randColor()
       ctx.colors = new Matercolor(color)
 
       const svg = SVG(this.$refs.canvas)
       svg.clear()
 
-      const gens = require('../generator/Picker').default.pickOne()
-      gens.forEach(gen=>gen.generate(svg,ctx))
+      const pickRet = require('../generator/Picker').default.randomPick()
+      if (pickRet.mask) {
+        const maskSVG = SVG().width(this.width).height(this.height)
+        pickRet.mask.generate(maskSVG, ctx)
+        ctx.mask = new Mask(maskSVG)
+        await ctx.mask.init(maskSVG)
+      }
+      pickRet.generator.generate(svg, ctx)
+      if (pickRet.filter)
+        pickRet.filter.generate(svg, ctx)
     },
     _svgToPng: async function() {
-      const canvas = document.createElement("canvas")
-      canvas.width = this.width
-      canvas.height = this.height
-
-      const svgNode = this.$refs.canvas.cloneNode(true)
-      const factor = remote.screen.getPrimaryDisplay().scaleFactor
-      if (factor > 1) {//高分屏
-        canvas.width *= factor
-        canvas.height *= factor
-        svgNode.setAttribute('width', canvas.width)
-        svgNode.setAttribute('height', canvas.height)
-        svgNode.setAttribute('transform', `scale(${factor},${factor})`)
-      }
-
-      const image = await new Promise((resolve, reject)=>{
-        const serializer = new XMLSerializer()
-        const source =
-          '<?xml version="1.0" standalone="no"?>\r\n' +
-          serializer.serializeToString(svgNode)
-        const image = new Image()
-        image.onload = ()=>resolve(image)
-        image.onerror = (e)=>reject(e)
-        image.src =
-          "data:image/svg+xml;base64," +
-          window.btoa(unescape(encodeURIComponent(source))) //给图片对象写入base64编码的svg流
+      return await svgAsPngUri(this.$refs.canvas, {
+        backgroundColor: 'white',
+        encoderOptions: 1,
       })
-
-      const context = canvas.getContext("2d") //取得画布的2d绘图上下文
-      context.fillStyle = "white"
-      context.fillRect(0, 0, canvas.width, canvas.height)
-      context.drawImage(image, 0, 0)
-
-      return canvas.toDataURL()
     },
     apply: async function () {
       const data = await this._svgToPng()
@@ -115,6 +94,10 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'Leafs';
+  src: url('../assets/Leafs.ttf');
+}
 .actionbar {
   display: flex;
   margin: 8px;

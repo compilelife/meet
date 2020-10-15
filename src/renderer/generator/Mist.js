@@ -12,7 +12,7 @@ export default {
      */
     generate: (g, ctx)=>{
         g.filterWith(add=>{
-            add.gaussianBlur(Aux.linearRand(40,20))
+            add.gaussianBlur(Aux.randLinearValue(40,20))
         })
     }
 }

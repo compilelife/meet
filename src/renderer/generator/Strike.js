@@ -30,7 +30,7 @@ export default {
         ]
         let i = 0
         while (x < n) {
-            let w = Math.floor(Aux.linearRand(minWidth+drift, minWidth))
+            let w = Math.floor(Aux.randLinearValue(minWidth+drift, minWidth))
             if (w > n - x) {
                 w = n - x
             }
@@ -49,6 +49,6 @@ export default {
         wrap.x((ctx.width - n) / 2)
         wrap.y((ctx.height - n) / 2)
 
-        wrap.rotate(Aux.arrRand(angles))
+        wrap.rotate(Aux.randArrItem(angles))
     }
 }
