@@ -28,7 +28,7 @@ export class Mask {
     }
 
     _index(x,y) {
-        const index = Math.floor(x) + Math.floor(y*this.width)
+        const index = Math.floor(x + y*this.width)
         return index * 4;
     }
 
@@ -42,7 +42,7 @@ export class Mask {
             r:this.imgData[index+0], 
             g:this.imgData[index+1], 
             b:this.imgData[index+2], 
-        }).alpha(this.imgData[index+3])
+        })//.alpha(this.imgData[index+3])
     }
 }
 
@@ -81,7 +81,7 @@ export const Type = {
     FILTER: 0x1,
     CAN_BE_FILTERED: 0x2,
     MASK: 0x4,
-    CAN_BE_MASKED: 0x8,
+    SHOULD_BE_MASK: 0x8,
 }
 
 /**

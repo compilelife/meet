@@ -42,7 +42,8 @@ function init() {
         }
 
         //MASK/FILTER不能被单独使用
-        if (hasType(gen.types, Type.MASK) || hasType(gen.types, Type.FILTER)) {
+        const onlyComposite = [Type.MASK, Type.FILTER]
+        if (onlyComposite.every(type=>!hasType(gen.types, type))) {
             randomPickable.push(gen)
         }
     }
@@ -62,10 +63,8 @@ function randomPick() {
         if (Aux.randBool()) {
             result.filter = Aux.randArrItem(generatorsByType[Type.FILTER])
         }
-    } else if (hasType(gen.types, Type.CAN_BE_MASKED)) {
-        if (true||Aux.randBool()) {
-            result.mask = Aux.randArrItem(generatorsByType[Type.MASK])
-        }
+    } else if (hasType(gen.types, Type.SHOULD_BE_MASK)) {
+        result.mask = Aux.randArrItem(generatorsByType[Type.MASK])
     }
 
     return result
